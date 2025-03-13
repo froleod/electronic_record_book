@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Электронная зачетная книжка</h1>
+<h2>Студент: {{ student.user.username }}</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Предмет</th>
+            <th>Семестр</th>
+            <th>Оценка</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for grade in grades %}
+        <tr>
+            <td>{{ grade.subject.name }}</td>
+            <td>{{ grade.subject.semester.number }}</td>
+            <td>{{ grade.grade }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
