@@ -8,12 +8,16 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 def student_grades(request):
     student = get_object_or_404(Student, user=request.user)
     grades = Grade.objects.filter(student=student).select_related('subject')
+    if not grades.exists():  # Если оценки не найдены
+        return render(request, 'records/grades_not_found.html')
     context = {
         'student': student,
         'grades': grades,
     }
     return render(request, 'records/student_grades.html', context)
 
+def home(request):
+    return render(request, 'home.html')
 
 def register(request):
     if request.method == 'POST':

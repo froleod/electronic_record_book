@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Ошибка</h2>
+<p>Оценки для студента не найдены.</p>
+<a href="{% url 'student_grades' %}" class="btn btn-primary">Назад</a>
+{% endblock %}
