@@ -4,20 +4,26 @@ from django.shortcuts import render, redirect
 from .forms import RegisterForm, SubjectForm, GradeForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 
+
 @login_required
 def student_grades(request):
     student = get_object_or_404(Student, user=request.user)
     grades = Grade.objects.filter(student=student).select_related('subject')
+
     if not grades.exists():  # Если оценки не найдены
         return render(request, 'records/grades_not_found.html')
+
     context = {
         'student': student,
         'grades': grades,
     }
+
     return render(request, 'records/student_grades.html', context)
+
 
 def home(request):
     return render(request, 'home.html')
+
 
 def register(request):
     if request.method == 'POST':
@@ -33,6 +39,7 @@ def register(request):
 def is_admin(user):
     return user.student.is_admin
 
+
 @login_required
 @user_passes_test(is_admin)
 def create_subject(request):
@@ -44,6 +51,7 @@ def create_subject(request):
     else:
         form = SubjectForm()
     return render(request, 'records/create_subject.html', {'form': form})
+
 
 @login_required
 @user_passes_test(is_admin)
