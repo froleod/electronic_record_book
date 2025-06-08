@@ -2,6 +2,8 @@
 
 {% block content %}
 <h1>Электронная зачетная книжка</h1>
+    <a href="{% url 'export_pdf' student.id %}" class="btn btn-primary">Скачать зачётку (PDF)</a>
+
 <h2>Студент: {{ student.user.username }}</h2>
 
 <table class="table table-bordered">
