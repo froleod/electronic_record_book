@@ -10,6 +10,7 @@
     <thead>
         <tr>
             <th>Предмет</th>
+            <th>Тип контроля</th>
             <th>Семестр</th>
             <th>Оценка</th>
         </tr>
@@ -18,6 +19,7 @@
         {% for grade in grades %}
         <tr>
             <td>{{ grade.subject.name }}</td>
+            <td>{{ grade.subject.get_control_type_display }}</td>
             <td>{{ grade.subject.semester.number }}</td>
             <td>{{ grade.grade }}</td>
         </tr>

@@ -18,4 +18,20 @@ class SubjectForm(forms.ModelForm):
 class GradeForm(forms.ModelForm):
     class Meta:
         model = Grade
-        fields = ['student', 'subject', 'grade']
+        fields = '__all__'
+
+    def clean(self):
+        cleaned_data = super().clean()
+        subject = cleaned_data.get('subject')
+        grade = cleaned_data.get('grade')
+
+        if subject and grade:
+            ct = subject.control_type
+            if ct in [Subject.EXAM, Subject.COURSEWORK]:
+                if not grade.isdigit() or int(grade) not in range(2, 6):
+                    raise forms.ValidationError("Оценка должна быть от 2 до 5.")
+            elif ct == Subject.CREDIT:
+                if grade.lower() not in ['зачет', 'незачет']:
+                    raise forms.ValidationError("Зачёт: допустимо только 'зачет' или 'незачет'.")
+
+

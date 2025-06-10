@@ -92,7 +92,8 @@ def export_student_record_pdf(request, student_id):
         p.drawString(50, y, "Оценки не найдены.")
     else:
         for grade in grades:
-            line = f"{grade.subject.name} - {grade.grade} (семестр {grade.subject.semester.number})"
+            control_type_display = grade.subject.get_control_type_display()
+            line = f"{grade.subject.name} - {grade.grade} ({control_type_display}, семестр {grade.subject.semester.number})"
             p.drawString(50, y, line)
             y -= 20
             if y < 50:
